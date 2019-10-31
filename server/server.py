@@ -31,13 +31,11 @@ def index():
 def home():
     return render_template('index.html')
 
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route('/dash')
-def dash():
-    if g.username:
-        print(g.username)
-        return render_template('dashboard.html')
-
 @app.route('/dashdash')
 @app.route('/homedash')
 def dashello():
@@ -97,7 +95,7 @@ def login():
                 if bcrypt.check_password_hash(userResults[1],(loginForm.password.data)):
                         session['logged_in'] = True
                         session['username'] = (loginForm.username.data)
-                        return redirect(url_for('dash'))
+                        return redirect(url_for('home'))
                 else:
                         flash('Either username or password was not recognised')
                         return render_template('login.html', form=loginForm) 

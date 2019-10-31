@@ -30,13 +30,13 @@ export default class Test extends React.Component {
 
             <Grid>
                 <Row>
-                <Col md={7} mdOffset={5}>
+                <Col md={20} mdOffset={50}>
                     <h3>{this.state.greeting}</h3>
                     <hr/>
                 </Col>
                 </Row>
                 <Row>
-                <Col md={7} mdOffset={5}>
+                <Col md={20} mdOffset={50}>
                     <Button bsSize="large" bsStyle="danger" onClick={this.getPythonHello}>
                     Say Something!
                     </Button>

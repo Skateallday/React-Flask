@@ -7,7 +7,9 @@ const config = {
         "navigation" :__dirname + '/js/navigation.jsx',
         "test" : __dirname +'/js/second.jsx',
         "writing" : __dirname +'/js/writing.jsx',
-        "dashboard" : __dirname +'/js/dashboard.jsx'
+        "dashboard" : __dirname +'/js/dashboard.jsx',
+        "userName" : __dirname +'/js/dashRender.jsx'
+
 
     },
     output: {

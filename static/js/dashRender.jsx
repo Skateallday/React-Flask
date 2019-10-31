@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import  dash  from "./dashUser";
+import  DashUser  from "./dashuser";
 
 
-ReactDOM.render(<dash />, document.getElementById("dash"));
+ReactDOM.render(<DashUser />, document.getElementById("DashUser"));

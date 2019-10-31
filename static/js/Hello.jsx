@@ -40,7 +40,7 @@ export default class Hello extends React.Component {
         return (
             <Grid>
                 <Row>
-                <Col md={5} mdOffset={2}>
+                <Col md={5} mdOffset={8}>
                     <h3>{this.state.greeting}</h3>
                     <h3>{this.state.name}</h3>
 

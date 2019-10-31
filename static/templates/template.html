@@ -22,8 +22,11 @@
 
         <li class="nav-item"><a class="nav-link {{ 'disabled' if loggedIn == 'Yes' else '' }}" href={{ url_for ( 'login' ) }}>Login</a></li>
         <li class="nav-item"><a class="nav-link {{ 'disabled' if loggedIn == 'Yes' else '' }}" href={{ url_for ( 'register' ) }}>Register</a></li>
+        
 
           </ul>
+          <a class="nav-link"><div id="DashUser" /> 
+            <script src="static/dist/userName.js" type="text/javascript"></script></a>
         </div>
       </nav>
  
