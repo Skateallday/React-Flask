@@ -6,7 +6,8 @@ const config = {
         "index" :__dirname + '/js/index.jsx',
         "navigation" :__dirname + '/js/navigation.jsx',
         "test" : __dirname +'/js/second.jsx',
-        "writing" : __dirname +'/js/writing.jsx'
+        "writing" : __dirname +'/js/writing.jsx',
+        "dashboard" : __dirname +'/js/dashboard.jsx'
 
     },
     output: {

@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Button, Grid, Row, Col } from "react-bootstrap";
 require('../css/fullstack.css');
 
@@ -26,12 +27,11 @@ export default class Test extends React.Component {
 
     render () {
         return (
-            <PageHeader>
 
             <Grid>
                 <Row>
                 <Col md={7} mdOffset={5}>
-                    <h1>{this.state.greeting}</h1>
+                    <h3>{this.state.greeting}</h3>
                     <hr/>
                 </Col>
                 </Row>
@@ -43,7 +43,6 @@ export default class Test extends React.Component {
                 </Col>
                 </Row>
             </Grid>
-            </PageHeader>
         );
     }
 }

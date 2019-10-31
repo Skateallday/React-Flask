@@ -27,11 +27,11 @@
 
           <label for="email">Email</label>
           {% if request.method == 'POST' %}
-          {% for error in form.email.errors %}
+          {% for error in form.emailAddress.errors %}
           <span class="errors">[{{ error }}]</span>
           {% endfor %}
           {% endif %}
-          {{ form.email(class="form-control") }}   
+          {{ form.emailAddress(class="form-control") }}   
          
   
           {{ form.submit(class="btn btn-danger") }}
