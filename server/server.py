@@ -1,7 +1,8 @@
 import random
 import os
 import sqlite3
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, g, redirect, flash, url_for
+from flask_bcrypt import Bcrypt, generate_password_hash, check_password_hash
 from forms.forms import registration, logon
 from config import Config
 
@@ -10,19 +11,45 @@ from flask_wtf.csrf import CSRFProtect, CSRFError
 
 
 app = Flask(__name__, static_folder='../static', template_folder='../static/templates')
-app.config.from_object(Config)
+bcrypt = Bcrypt(app)
 
+app.config.from_object(Config)
 csrf = CSRFProtect(app)
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
 
+@app.before_request
+def before_request():
+        g.username = None
+        if 'username' in session:
+                g.username = session['username']
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+        return render_template('index.html')
 
 @app.route('/home')
 def home():
     return render_template('index.html')
 
+
+@app.route('/dash')
+def dash():
+    if g.username:
+        print(g.username)
+        return render_template('dashboard.html')
+
+@app.route('/dashdash')
+@app.route('/homedash')
+def dashello():
+    return get_username()
+
+def get_username():
+    if g.username == None:
+        lusername = "Please Sign In"
+        return lusername
+    else:        
+        lusername = g.username
+        return lusername
 
 @app.route('/homehello') # take note of this decorator syntax, it's a common pattern
 @app.route('/hello') # take note of this decorator syntax, it's a common pattern
@@ -58,18 +85,61 @@ def testThis():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     loginForm = logon(request.form)
+    if request.method == 'POST':  
+        conn = sqlite3.connect('testData.db')                
+        with conn:
+                c = conn.cursor()
+                find_user = ("SELECT * FROM users WHERE username = ?")
+                c.execute(find_user, [(loginForm.username.data)])  
+                results =c.fetchall()
+                
+                userResults = results[0]
+                if bcrypt.check_password_hash(userResults[1],(loginForm.password.data)):
+                        session['logged_in'] = True
+                        session['username'] = (loginForm.username.data)
+                        return redirect(url_for('dash'))
+                else:
+                        flash('Either username or password was not recognised')
+                        return render_template('login.html', form=loginForm) 
+
     return render_template('login.html', form=loginForm)
+
+@app.route("/logout")
+def logout():        
+        session['logged_in'] = True
+        session.clear()
+        flash("You have successfully logged out.")
+        return redirect('home')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     registerForm = registration(request.form)   
+
+    if request.method == 'POST':
+            pw_hash =bcrypt.generate_password_hash(registerForm.password.data)
+            newEntry = [((registerForm.username.data), pw_hash, (registerForm.emailAddress.data))]
+            conn =sqlite3.connect('testData.db')
+            print ("Opened database successfully")
+            with conn:
+                    c =conn.cursor()
+                    try:
+                            sql = '''INSERT INTO users (username, password, email) VALUES(?,?,?)'''
+                            c.executemany(sql, newEntry)
+                            print ("Insert correctly")
+                    except:
+                            flash("This is already an account, please log in with those details or change details.")
+                            return render_template("register.html", form=registerForm)
+                            c.commit()
+
+                    flash((registerForm.username.data) + " Successfully Registered!")
+                    return redirect('login')
+            return render_template("register.html", form=registerForm)
 
     return render_template('register.html', form=registerForm)
 
 def post_test():
     conn =sqlite3.connect('testData.db')
     conn.row_factory = lambda cursor, row: row[0]
-
     c = conn.cursor()
     c.execute("select greeting from testData")    
     rows = c.fetchall()
@@ -79,7 +149,6 @@ def post_test():
 def get_test():
     conn =sqlite3.connect('testData.db')
     conn.row_factory = lambda cursor, row: row[0]
-
     c = conn.cursor()
     c.execute("select greeting from testData")    
     rows = c.fetchall()

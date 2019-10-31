@@ -17,8 +17,7 @@
     "npm",
     "webpack"
   ],
-  "repository": {
-  },
+  "repository": {},
   "author": "Marc Inglis",
   "license": "MIT",
   "babel": {
