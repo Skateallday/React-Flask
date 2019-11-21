@@ -38,7 +38,7 @@ def dash():
         print(g.username)
         return render_template('dashboard.html')
 
-@app.route('/dashdash')
+@app.route('/testdash')
 @app.route('/homedash')
 def dashello():
     return get_username()
@@ -51,7 +51,7 @@ def get_username():
         lusername = g.username
         return lusername
 
-@app.route('/homehello') # take note of this decorator syntax, it's a common pattern
+@app.route('/testhello') # take note of this decorator syntax, it's a common pattern
 @app.route('/hello') # take note of this decorator syntax, it's a common pattern
 def hello():
     # It is good practice to only call a function in your route end-point,

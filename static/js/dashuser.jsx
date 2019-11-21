@@ -29,7 +29,7 @@ export default class dash extends React.Component {
     render () {
         return (
             <PageHeader>
-                <div className='header-contents'>
+            <div className="card-body text-dark">
                     <h3>This works with an array in the server file!</h3>
                 {this.addHeaderImg()}
                 <Hello name="Marc" />

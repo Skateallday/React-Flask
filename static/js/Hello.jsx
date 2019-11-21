@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Grid, Row, Col } from "react-bootstrap";
+import { Button} from "react-bootstrap";
+import bottle from '../dist/1c839b99315270be1bec1905821ddd71.jpg';
 
 
 var $ = require('jquery');
@@ -7,6 +8,7 @@ var $ = require('jquery');
 export default class Hello extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {bottle: '../static/dist/1c839b99315270be1bec1905821ddd71.jpg'}
         this.state = {name : "Marc"};
         this.state = {greeting: 'Awrite '};
 
@@ -15,8 +17,8 @@ export default class Hello extends React.Component {
     }   
     componentDidMount(){
         $.get(window.location.href + 'dash', (name) => {
-            console.log(name);
             this.personaliseUser(name);
+            this.personaliseImg(bottle);
 
         });    }
     
@@ -30,7 +32,9 @@ export default class Hello extends React.Component {
     personaliseUser(name) {
         this.setState({name: name});
     }
-
+    personaliseImg(bottle) {
+        this.setState({bottle: bottle});
+    }
     personaliseGreeting(greeting) {
         this.setState({greeting: greeting});
     }
@@ -38,24 +42,25 @@ export default class Hello extends React.Component {
 
     render () {
         return (
-            <Grid>
-                <Row>
-                <Col md={5} mdOffset={2}>
-                    <h3>{this.state.greeting}</h3>
-                    <h3>{this.state.name}</h3>
+            <div className="card text-center">
+            <div className="overflow">
+            <img src={this.state.bottle} alt="Image 1" className="card-img-top"/>
 
-                    <hr/>
-                </Col>
-                </Row>
-                <Row>
-                <Col md={5} mdOffset={2}>                   
-                    <Button bsSize="large" bsStyle="danger" onClick={this.getPythonHello}>
-                    Say Anything!
-                    </Button>
+            </div>
+            <div className="card-body text-dark">
+                <h4 className="card-title">
+                {this.state.greeting}             </h4>
+                    <h3 className="card-title">{this.state.name}</h3>
                     
-                </Col>
-                </Row>
-            </Grid>
+                <p className="card-text text-secondary">  
+                This card here uses a database connection to randomly select a Prefix for your name!                     </p>
+                <Button bsSize="large" className="btn btn-outline-success" onClick={this.getPythonHello}>  Say Something!
+                    </Button>
+            </div>
+        </div>
+                   
+
+               
         );
     }
 }

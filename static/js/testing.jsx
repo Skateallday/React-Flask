@@ -1,7 +1,9 @@
 import React from "react";
 
-import { Button, Grid, Row, Col } from "react-bootstrap";
 require('../css/fullstack.css');
+import { Button} from "react-bootstrap";
+import bottle from '../dist/1c839b99315270be1bec1905821ddd71.jpg';
+
 
 var $ = require('jquery');
 
@@ -27,22 +29,25 @@ export default class Test extends React.Component {
 
     render () {
         return (
+            <div className="card text-center">
+            <div className="overflow">
+            <img src={'../static/dist/1c839b99315270be1bec1905821ddd71.jpg'} alt="Image 1" className="card-img-top"/>
 
-            <Grid>
-                <Row>
-                <Col md={7} mdOffset={5}>
-                    <h3>{this.state.greeting}</h3>
-                    <hr/>
-                </Col>
-                </Row>
-                <Row>
-                <Col md={7} mdOffset={5}>
-                    <Button bsSize="large" bsStyle="danger" onClick={this.getPythonHello}>
-                    Say Something!
+            </div>
+            <div className="card-body text-dark">
+                <h4 className="card-title">
+                {this.state.greeting}                
+                {this.state.name} 
+                </h4>
+                <p className="card-text text-secondary">
+
+                This button below randomly selects the prefix for your name through an array on the server.                </p>
+                <Button bsSize="large" className="btn btn-outline-success" onClick={this.getPythonHello}>  Say Something!
                     </Button>
-                </Col>
-                </Row>
-            </Grid>
+            </div>
+        </div>
+
+           
         );
     }
 }
